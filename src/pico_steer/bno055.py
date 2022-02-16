@@ -1,4 +1,7 @@
+from micropython import const
 import time
+import struct
+import pico_steer.debug as db
 
 CONFIG_MODE = const(0x00)
 ACCONLY_MODE = const(0x01)
@@ -35,28 +38,39 @@ _AXIS_MAP_CONFIG_REGISTER = const(0x41)
 _AXIS_MAP_SIGN_REGISTER = const(0x42)
 
 class BNO055():
-    def __init__(self, i2c, address, debug):
+    def __init__(self, i2c, address, debug=False):
         self.i2c = i2c
         self.address = address 
         self.debug = debug
 
         time.sleep(0.1)
-        id = int.from_bytes(i2c.read(self.i2c_address, _ID_REGISTER, 1), 'little')
-        print('ID', id)
-        if id == 0xa0:
+        device_id = int.from_bytes(i2c.readfrom_mem(self.address, _ID_REGISTER, 1), 'little')
+        if debug:
+            db.write('ID {}'.format(device_id))
+        if device_id == 0xa0:
             self._write_config(_MODE_REGISTER, CONFIG_MODE)
             self._write_config(_POWER_REGISTER, _POWER_NORMAL)
             self._write_config(_MODE_REGISTER, IMUPLUS_MODE)
+            if debug:
+                db.write('Power {}'.format(self.i2c.readfrom_mem(self.address, _POWER_REGISTER, 1)) )
+                db.write('Mode {}'.format(self.i2c.readfrom_mem(self.address, _MODE_REGISTER, 1)) )
+
         else:
             if debug:
-                print('Not BNO055 ID!')
+                db.write('Not BNO055 ID!')
             self.i2c_address = 0
 
     def _write_config(self, register, value):
         time.sleep(0.02)
-        self._write(register, bytes(bytearray([value])))
+        self.i2c.writeto_mem(self.address, register, bytes(bytearray([value])))
         time.sleep(0.1)
 
 
-    def read():
+    def _read(self, address, register, length=1):
+        return self.i2c.readfrom_mem(address, register, length)
 
+    def quaternion(self):
+        if self.address:
+            scale = 1.0 / (1 << 14)
+            return tuple(scale * value for value in struct.unpack('<hhhh', self._read(self.address, _QUATERNION_REGISTER, 8)))
+        

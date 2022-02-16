@@ -1,7 +1,7 @@
 import math
-import debug_tools
+import pico_steer.debug as db
 
-def quaternion_to_euler(qx, qy, qz, qw, debug=False):
+def quaternion_to_euler(qw, qx, qy, qz, debug=False):
     sinr_cosp = 2 * (qw * qx + qy * qz)
     cosr_cosp = 1 - 2 * (qx * qx + qy * qy)
     roll = math.degrees(math.atan2(sinr_cosp, cosr_cosp))
@@ -11,7 +11,7 @@ def quaternion_to_euler(qx, qy, qz, qw, debug=False):
         pitch = math.asin(sinp)
     except ValueError:
         if debug:
-            print(debug_tools.now(), 'Value error:', qx, qy, qz, qw )
+            db.write('Value error: {} {} {} {}'.format(qx, qy, qz, qw) )
         return (None, None, None)
     pitch = math.degrees(pitch)
 
