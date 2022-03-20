@@ -5,6 +5,7 @@ import _thread
 import time
 import pico_steer.serial_reader
 import pico_steer.debug as db
+import pico_steer.section_control
 
 _HELLO = const(0xc7)
 _LATLON = const(0xd0)
@@ -26,6 +27,7 @@ class AgIO():
         self.motor_control = motor_control
         self.debug = debug
         self.reader = pico_steer.serial_reader.Reader(debug)
+        self.sc = pico_steer.section_control.SectionControl()
 
     def start_reader(self):
         _thread.start_new_thread(self.reader.reader, ())
@@ -69,13 +71,20 @@ class AgIO():
 
             if pgn is not None:
                 if pgn == _STEER_CONFIG:
-                    db.write('steer config')
+                    if self.debug:
+                        db.write('steer config')
                     self.settings.settings.update(payload)
                     self.settings.save_settings()
                 if pgn == _STEERSETTINGS:
-                    db.write('steer settings')
+                    if self.debug:
+                        db.write('steer settings')
                     self.settings.settings.update(payload)
                     self.settings.save_settings()
                 if pgn == _AUTOSTEER_DATA:
-                    db.write('autosteer data')
-                    self.motor_control.set_control(payload)
+                    if self.debug:
+                        db.write('autosteer data')
+                    if payload is not None:
+                        self.motor_control.set_control(payload)
+                        if self.debug:
+                            db.write(payload['SC'])
+                        self.sc.update(payload['SC'])

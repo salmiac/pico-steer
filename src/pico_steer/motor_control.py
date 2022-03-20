@@ -17,7 +17,7 @@ class MotorControl():
 
         self.switch = Pin(13, Pin.IN, Pin.PULL_UP)
         self.switch_active = False
-        self.active_led = Pin(18, Pin.OUT)
+        self.active_led = Pin(16, Pin.OUT)
         self.active_led.on()
         self.direction_led = Pin(14, Pin.OUT)
         self.direction_led.on()

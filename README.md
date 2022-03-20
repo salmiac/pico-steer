@@ -44,18 +44,18 @@ Getting Started with Raspberry Pi Pico and CircuitPython https://learn.adafruit.
 |IMU I2C SDA|I2C0 SDA/GP4|6|35|ADC_VREF|WAS 5V|
 |IMU I2C SCL|I2C0 SCL/GP5|7|34|GP28|WAS signal|
 |IMU GND|GND|8|33|GND|WAS GND|
-||GP6|9|32|GP27||
-||GP7|10|31|GP26||
-||GP8|11|30|RUN||
-||GP9|12|29|GP22||
-|PWM GND|GND|13|28|GND||
-||GP10|14|27|GP21||
-||GP11|15|26|GP20||
-||GP12|16|25|GP19||
-|Autosteer switch|GP13|17|24|GP18|Autosteer activated LED -|
-|Autosteer switch|GND|18|23|GND|Power on LED -|
+|relay 6|GP6|9|32|GP27|relay 5|
+|relay 7|GP7|10|31|GP26|relay 4|
+|debug serial TX|GP8|11|30|RUN||
+|debug serial RX|GP9|12|29|GP22|relay 3|
+|PWM GND|GND|13|28|GND|Power on LED -|
+|relay 8|GP10|14|27|GP21|relay 2, section 3|
+|relay 9|GP11|15|26|GP20|relay 1, section 2|
+|Work switch|GP12|16|25|GP19|relay 0, section 1|
+|Autosteer switch|GP13|17|24|GP18|Optional mode select jumper or switch|
+|Autosteer switch|GND|18|23|GND|Optional mode select jumper GND|
 |Motor direction LED -|GP14|19|22|GP17|Activity LED -|
-|Stop the program|GP15|20|21|GP16||
+|Stop the program|GP15|20|21|GP16|Autosteer activated LED -|
 
 ### Inertial masurement unit (IMU)
 Connected via I2C 

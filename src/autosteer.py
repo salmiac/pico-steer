@@ -11,10 +11,11 @@ import micropython
 import gc
 
 stop = Pin(15, Pin.IN, Pin.PULL_UP)
+work_switch = Pin(12, Pin.IN, Pin.PULL_UP)
 activity_led = Pin(17, Pin.OUT, Pin.OPEN_DRAIN)
 internal_activity_led = Pin(25, Pin.OUT)
 
-debug=True
+debug=False
 
 imu = pico_steer.imu.IMU(debug=False)
 settings = pico_steer.settings.Settings(debug=debug)
@@ -40,17 +41,20 @@ while True:
             break
     motor_control.update_motor(wheel_angle)
     if motor_control.switch_active:
-        switch = 0x00
+        switch = 0b1111_1101
     else:
-        switch = 0xff
+        switch = 0b1111_1111
+    if work_switch.value() == 0:
+        switch &= 0b1111_1110
+    
     agio.from_autosteer(wheel_angle, heading, roll, switch, motor_control.pwm_display())
     agio.alive()
     if debug:
         db.write('.')
-    time.sleep(0.1)
+    time.sleep(0.01)
     if blinker % 32 == 0:
         activity_led.toggle()
-        # internal_activity_led.toggle()
+        internal_activity_led.toggle()
     if stop.value() == 0:
         micropython.kbd_intr(3)
         agio.reader.stop=True

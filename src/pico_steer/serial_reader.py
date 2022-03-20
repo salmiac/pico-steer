@@ -121,7 +121,7 @@ pgn_data = {
         'hydLift': data[2],
         'Tram': data[3],
         'Geo Stop': data[4],
-        'SC': bin(struct.unpack('<H', data[6:8])[0])[2:],
+        'SC': struct.unpack('<H', data[6:8])[0],
     },
     _STEER_CONFIG: # steerConfig
     lambda data: { 
@@ -163,7 +163,7 @@ pgn_data = {
         'Speed': struct.unpack('<H', data[0:2])[0]/10.0,
         'Status': data[2],
         'SteerAngle': struct.unpack('<h', data[3:5])[0]/100.0,
-        'SC': bin(struct.unpack('<H', data[6:8])[0])[2:],
+        'SC': struct.unpack('<H', data[6:8])[0],
     },
 }
 
