@@ -75,11 +75,13 @@ class AgIO():
                         db.write('steer config')
                     self.settings.settings.update(payload)
                     self.settings.save_settings()
+                    continue
                 if pgn == _STEERSETTINGS:
                     if self.debug:
                         db.write('steer settings')
                     self.settings.settings.update(payload)
                     self.settings.save_settings()
+                    continue
                 if pgn == _AUTOSTEER_DATA:
                     if self.debug:
                         db.write('autosteer data')
@@ -88,3 +90,10 @@ class AgIO():
                         if self.debug:
                             db.write(payload['SC'])
                         self.sc.update(payload['SC'])
+                    continue
+                if pgn == _MACHINE_DATA:
+                    if self.debug:
+                        db.write('machine data')
+                    if payload is not None:
+                        self.sc.update(payload['SC'])
+                    continue

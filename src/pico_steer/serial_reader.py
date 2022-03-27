@@ -1,11 +1,10 @@
 import _thread
 import sys
 from micropython import const, kbd_intr
-from machine import Pin
 import pico_steer.debug as db
 import struct
 
-internal_activity_led = Pin(25, Pin.OUT)
+from machine import Pin
 
 _SOURCE_AGIO = const(0x7f)
 
@@ -188,7 +187,6 @@ class Reader():
             while True:
                 chars = sys.stdin.buffer.read(1)
                 for c in chars:
-                    internal_activity_led.toggle()
                     if self.debug:
                         db.write(' C: {} {} '.format(c, index))
 

@@ -11,7 +11,7 @@ stop = Pin(15, Pin.IN, Pin.PULL_UP)
 settings = pico_steer.settings.Settings()
 motor_control = pico_steer.motor_control.MotorControl(settings)
 
-agio = pico_steer.agio.AgIO(settings, motor_control, False)
+agio = pico_steer.agio.AgIO(settings, motor_control, True)
 agio.start_reader()
 
 while True:

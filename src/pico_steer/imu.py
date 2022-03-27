@@ -49,3 +49,4 @@ class IMU():
             if self.debug:
                 db.write('Heading {}, roll {}, pitch {}'.format(heading, roll, pitch) )
             return (heading, roll, pitch)
+        return None

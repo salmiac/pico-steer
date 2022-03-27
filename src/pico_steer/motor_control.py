@@ -40,11 +40,6 @@ class MotorControl():
             self.pwm_value = pwm_value
             self.direction = direction
 
-    # def poll_and_update(self):
-    #     while True:
-    #         self.update_motor(wheel_angle)
-    #         time.sleep(0.01)
-
     def update_motor(self, wheel_angle):
         if self.debug:
             db.write('Start motor controller.')

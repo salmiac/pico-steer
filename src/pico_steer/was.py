@@ -51,3 +51,5 @@ class WAS():
             if self.debug:
                 db.write('Angle {}'.format(angle))
             return angle
+        return None
+        
