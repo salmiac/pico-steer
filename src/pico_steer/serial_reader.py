@@ -3,7 +3,7 @@ import sys
 from micropython import const, kbd_intr
 import pico_steer.debug as db
 import struct
-
+import gc
 from machine import Pin
 
 _SOURCE_AGIO = const(0x7f)
@@ -246,4 +246,5 @@ class Reader():
                     length = 0
                     data = bytearray()
                     crc_sum = 0
+                gc.collect()
         kbd_intr(3)

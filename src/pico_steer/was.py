@@ -49,7 +49,7 @@ class WAS():
             if angle > MAXANGLE:
                 angle = MAXANGLE
             if self.debug:
-                db.write('Angle {}'.format(angle))
+                db.write('Angle {}\nadc {}\noffset {}'.format(angle, adc, self.settings.settings['steerOffset']))
             return angle
         return None
         
