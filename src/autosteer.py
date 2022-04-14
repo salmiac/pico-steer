@@ -68,6 +68,7 @@ while True:
     if blinker % 32 == 0:
         if debug:
             db.write('.')
+            db.write(str(settings.settings))
         activity_led.toggle()
         internal_activity_led.toggle()
     if stop.value() == 0:

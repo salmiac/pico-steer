@@ -43,4 +43,5 @@ class Settings():
                 db.write(str(err))
         if self.debug:
             db.write('Save settings ok')
+            db.write(str(self.settings))
 
