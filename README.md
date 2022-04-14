@@ -1,6 +1,10 @@
 # pico-steer
 Raspberry Pi Pico based autosteer software
 
+## Notice!
+I left this 'as is'. I gave up on developing this. Indivual parts should work. There are probably some problems. The main reason to give up is Windows USB - serial port. One USB - serial GPS works well. Add Raspberry Pi Pico USB - serial to it with USB hub and serial ports stop working.
+I continue using Raspberry Pi 3 https://github.com/salmiac/pi-steer
+
 ## Warning
 This just just for demonstration and proof of concept. This should never ever be used on full sized machinery. You will crash and die if You do. You have been warned.
 
@@ -64,17 +68,12 @@ https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles
 
 #### BNO055 
 
-This is not a good IMU unit. Use only if nothing else is awailable. https://github.com/adafruit/Adafruit_BNO055
-
-Adafruit Circuit Python library https://github.com/adafruit/Adafruit_CircuitPython_BNO055
+https://github.com/adafruit/Adafruit_BNO055
 
 https://www.bosch-sensortec.com/media/boschsensortec/downloads/datasheets/bst-bno055-ds000.pdf
 
 #### BNO085
 
-This is a good IMU unit.
-
-Python library https://github.com/adafruit/Adafruit_BNO08x
 
 ### Wheel angle sensor (WAS)
 Pico board has it self an analog to digital converter (ADC) that could be used. However **RTY120LVNAA** https://sps.honeywell.com/us/en/products/sensing-and-iot/sensors/motion-and-position-sensors/magnetic-position-sensors/rty-series that is used here is rated for 5 V (output 0.5 V to 4.5 V) and Pico ADC is for 3.3 V Therefor internal ADC can't be used. Instead external ADC is used. Here it is Adafruit 16 bit ADC **ADS1115** http://adafru.it/1085 datasheet https://cdn-shop.adafruit.com/datasheets/ads1115.pdf . Yet another external board is needed for 3.3 V - 5 V conversion Adafruit 4-channel I2C-safe Bi-directional logic level converter **BSS138** http://adafru.it/757.
